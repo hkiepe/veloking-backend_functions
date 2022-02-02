@@ -5,8 +5,12 @@ const cors = require("cors");
 const admin = require("firebase-admin");
 admin.initializeApp();
 
+const authMiddleware = require("./authMiddleware");
+
 const app = express();
+app.use(authMiddleware);
 const { body, validationResult } = require("express-validator");
+
 
 app.get("/", async (req, res) => {
   const snapshot = await admin.firestore().collection("users").get();
